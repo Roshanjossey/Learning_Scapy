@@ -14,3 +14,4 @@ class BabyStepsItem(scrapy.Item):
     title = scrapy.Field()
     link = scrapy.Field()
     desc = scrapy.Field()
+    pid = scrapy.Field()
