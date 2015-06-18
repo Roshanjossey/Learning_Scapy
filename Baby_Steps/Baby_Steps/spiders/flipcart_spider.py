@@ -3,13 +3,21 @@ import scrapy
 class FlipSpider(scrapy.Spider):
     name = "flip"
     allowed_domains = ["flipkart.com"]
-    start_urls = ["http://www.flipcart.com/mobiles/pr?sid=tyy,4io&otracker=ch_vn_mobile_filter_Top%20Brands_All/"]
+    start_urls = ["http://www.flipkart.com/lc/pr/pv1/spotList1/spot1/productList?sid=mgl&filterNone=true&start=1&ajax=true&_=1434544629317"]
+    # http://www.flipkart.com/lc/pr/pv1/spotList1/spot1/productList?sid=mgl&filterNone=true&start=4&ajax=true&_=1434544629317
+    # http://www.flipkart.com/lc/pr/pv1/spotList1/spot1/productList?sid=tyy%2C4mr%2Ck9h&filterNone=true&start=21&ajax=true&_=1434545282924
     def parse(self, response):
-        f = file('Phone_Details.txt', 'w')
-        for result in response.xpath('//div[@class="product-unit unit-4 browse-product new-design "]'):
+        for result in response.xpath('//div[@class="product-unit unit-3 browse-product new-design  quickview-required"]'):
             title = result.xpath('div[@class="pu-details lastUnit"]/div[@class="pu-title fk-font-13"]/a/@title').extract()
             link = result.xpath('div[@class="pu-details lastUnit"]/div[@class="pu-title fk-font-13"]/a/@href').extract()
             price = result.xpath('div[@class="pu-details lastUnit"]/div[@class="pu-price"]/div/div/span/text()').extract()
-            f.write("{0} {1}".format(title[0].ljust(73), price[0].ljust(15)))
-            f.write(link[0])
-            f.write('\n')
+            print("{0} {1}".format(title[0].ljust(73), price[0].ljust(15)))
+            print(link[0])
+            print('\n')
+        for result in response.xpath('//div[@class="product-unit unit-3 browse-product new-design  quickview-required vs-widget-required"]'):
+            title = result.xpath('div[@class="pu-details lastUnit"]/div[@class="pu-title fk-font-13"]/a/@title').extract()
+            link = result.xpath('div[@class="pu-details lastUnit"]/div[@class="pu-title fk-font-13"]/a/@href').extract()
+            price = result.xpath('div[@class="pu-details lastUnit"]/div[@class="pu-price"]/div/div/span/text()').extract()
+            print("{0} {1}".format(title[0].ljust(73), price[0].ljust(15)))
+            print(link[0])
+            print('\n')
